@@ -53,7 +53,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     pecl install -a ssh2-1.3.1 && \
     docker-php-ext-enable memcached ssh2 && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    apk del --no-network .build-deps
+    apk del --no-network .build-deps && \
+    mkdir -p /run/php
 
 
 COPY master.ini /etc/supervisor.d/
