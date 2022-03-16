@@ -32,6 +32,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         libxml2 \
         libzip \
         bzip2 && \
+    pecl install inotify && \
     docker-php-ext-configure opcache --enable-opcache &&\
     docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ && \
     docker-php-ext-install \
@@ -51,7 +52,10 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         bcmath && \
     pecl install memcached-3.1.5 && \
     pecl install -a ssh2-1.3.1 && \
-    docker-php-ext-enable memcached ssh2 && \
+    docker-php-ext-enable \
+        memcached \
+        ssh2 \
+        inotify && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
     apk del --no-network .build-deps && \
     mkdir -p /run/php
