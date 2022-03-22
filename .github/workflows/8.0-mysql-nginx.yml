@@ -1,12 +1,14 @@
-name: Build PHP 8.0
+name: PHP 8.0 MySQL Nginx
 on:
   push:
     branches: [master]
+    paths:
+      - "8.0/nginx-mysql/**"
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  mysql-nginx-8_0:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read

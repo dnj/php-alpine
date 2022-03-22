@@ -1,12 +1,14 @@
-name: Build PHP 7.4
+name: PHP 7.4 MySQL Nginx
 on:
   push:
     branches: [master]
+    paths:
+      - "7.4/nginx-mysql/**"
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  mysql-nginx-7_4:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
