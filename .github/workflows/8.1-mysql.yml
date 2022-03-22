@@ -1,4 +1,4 @@
-name: PHP 8.1 MySQL Nginx
+name: PHP 8.1 MySQL
 on:
   push:
     branches: [master]
