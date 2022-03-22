@@ -3,7 +3,7 @@ on:
   push:
     branches: [master]
     paths:
-      - "7.4/nginx-mysql/**"
+      - "7.4/mysql-nginx/**"
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -31,7 +31,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./7.4/nginx-mysql/
+          context: ./7.4/mysql-nginx/
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:7.4-mysql-nginx
           labels: ${{ steps.meta.outputs.labels }}
