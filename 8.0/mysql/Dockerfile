@@ -14,6 +14,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         libssh2-dev \
         libzip-dev \
         freetype-dev \
+        gmp-dev \
         curl-dev && \
     apk add --update --no-cache \
         jpegoptim \
@@ -29,6 +30,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         curl \
         libxml2 \
         libzip \
+        gmp \
         bzip2 && \
     pecl install inotify && \
     docker-php-ext-configure opcache --enable-opcache &&\
@@ -47,6 +49,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         bcmath \
         zip \
         soap \
+        gmp \
         bcmath && \
     pecl install memcached-3.1.5 && \
     pecl install -a ssh2-1.3.1 && \
