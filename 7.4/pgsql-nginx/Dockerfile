@@ -35,6 +35,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         gmp \
         bzip2 && \
     pecl install inotify && \
+    pecl install redis-5.3.7 && \
     docker-php-ext-configure opcache --enable-opcache &&\
     docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
@@ -58,6 +59,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     pecl install -a ssh2-1.3.1 && \
     docker-php-ext-enable \
         memcached \
+        redis \
         ssh2 \
         inotify && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
