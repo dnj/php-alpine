@@ -38,5 +38,5 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.version }}-${{ matrix.variant }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=$GITHUB_REF_NAME-${{ matrix.version }}-${{ matrix.variant }}
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-${{ matrix.version }}-${{ matrix.variant }}
