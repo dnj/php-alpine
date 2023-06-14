@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.14
+FROM php:7.4-fpm-alpine3.16
 
 WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -33,6 +33,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         libxml2 \
         libzip \
         gmp \
+        linux-headers \
         bzip2 && \
     pecl install inotify && \
     pecl install redis-5.3.7 && \
