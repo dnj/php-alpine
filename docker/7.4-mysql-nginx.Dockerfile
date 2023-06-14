@@ -68,7 +68,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
 
 
 COPY supervisor/master.ini /etc/supervisor.d/
-COPY nginx/default.conf nginx/default.conf.d /etc/nginx/conf.d/ 
+COPY nginx/default.conf /etc/nginx/http.d/ 
+COPY nginx/default.conf.d /etc/nginx/conf.d/
 COPY php/opcache.ini $PHP_INI_DIR/conf.d/
 COPY php/php.ini $PHP_INI_DIR/conf.d/
 COPY php/www.conf php/zz-docker.conf /usr/local/etc/php-fpm.d/
