@@ -64,7 +64,9 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         inotify && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
     apk del --no-network .build-deps && \
-    mkdir -p /run/php
+    mkdir -p /run/php /run/nginx && \
+    ln -s /dev/stdout /var/log/nginx/access.log && \
+    ln -s /dev/stderr /var/log/nginx/error.log
 
 
 COPY supervisor/master.ini /etc/supervisor.d/
