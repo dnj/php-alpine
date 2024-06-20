@@ -24,6 +24,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         icu-dev \
         freetype \
         libmemcached \
+        exif \
+        dom \
         postgresql-dev \
         libssh2 \
         zip \
@@ -53,11 +55,15 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zip \
         soap \
         gmp \
+        exif \
+        dom \
         bcmath && \
     pecl install memcached-3.1.5 && \
     pecl install -a ssh2-1.3.1 && \
     docker-php-ext-enable \
         memcached \
+        exif \
+        dom \
         redis \
         ssh2 \
         inotify && \
