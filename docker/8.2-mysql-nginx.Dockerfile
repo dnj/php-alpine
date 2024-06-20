@@ -8,6 +8,9 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        libwebp-dev \
+        libxpm-dev \
+        libavif-dev \
         libxml2-dev \
         bzip2-dev \
         libmemcached-dev \
@@ -17,6 +20,10 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         gmp-dev \
         curl-dev && \
     apk add --update --no-cache \
+        libpng \
+        libwebp \
+        libxpm \
+        libavif \
         jpegoptim \
         pngquant \
         optipng \
@@ -38,7 +45,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     pecl install inotify && \
     pecl install redis-5.3.7 && \
     docker-php-ext-configure opcache --enable-opcache &&\
-    docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ && \
+    docker-php-ext-configure gd --with-jpeg --with-webp --with-xpm --with-avif --with-freetype && \
     docker-php-ext-install \
         opcache \
         mysqli \
