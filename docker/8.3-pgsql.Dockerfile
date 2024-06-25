@@ -4,7 +4,7 @@ WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV PATH="/var/www/vendor/bin:$PATH"
 
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
+RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
         libjpeg-turbo-dev \
         libpng-dev \
@@ -72,10 +72,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         inotify && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
     apk del --no-network .build-deps && \
-    mkdir -p /run/php
-
-
-COPY php/opcache.ini $PHP_INI_DIR/conf.d/
-COPY php/php.ini $PHP_INI_DIR/conf.d/
+    mkdir -p /run/php && \
+    cp -v /mnt/usr/local/etc/php/php.ini /usr/local/etc/php/php.ini && \
+    cp -v /mnt/usr/local/etc/php/conf.d/* /usr/local/etc/php/conf.d/
 
 CMD ["/usr/bin/php"]

@@ -4,7 +4,7 @@ WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV PATH="/var/www/vendor/bin:$PATH"
 
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
+RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
         libjpeg-turbo-dev \
         libpng-dev \
@@ -43,7 +43,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         linux-headers \
         bzip2 && \
     pecl install inotify && \
-    pecl install redis-5.3.7 && \
+    pecl install redis-6.0.2 && \
     docker-php-ext-configure opcache --enable-opcache &&\
     docker-php-ext-configure gd --with-jpeg --with-webp --with-xpm --with-avif --with-freetype && \
     docker-php-ext-install \
@@ -63,8 +63,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         soap \
         gmp \
         bcmath && \
-    pecl install memcached-3.1.5 && \
-    pecl install -a ssh2-1.3.1 && \
+    pecl install memcached-3.2.0 && \
+    pecl install -a ssh2-1.4.1 && \
     docker-php-ext-enable \
         memcached \
         exif \
@@ -75,14 +75,12 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     apk del --no-network .build-deps && \
     mkdir -p /run/php /run/nginx && \
     ln -s /dev/stdout /var/log/nginx/access.log && \
-    ln -s /dev/stderr /var/log/nginx/error.log
+    ln -s /dev/stderr /var/log/nginx/error.log && \
+    cp -v /mnt/usr/local/etc/php/php.ini /usr/local/etc/php/php.ini && \
+    cp -v /mnt/usr/local/etc/php/conf.d/* /usr/local/etc/php/conf.d/ && \
+    cp -v /mnt/usr/local/etc/php-fpm.d/* /usr/local/etc/php-fpm.d/ && \
+    cp -v /mnt/etc/nginx/http.d/* /etc/nginx/http.d/ && \
+    cp -Rv /mnt/etc/nginx/conf.d /etc/nginx/conf.d && \
+    cp -v /mnt/etc/supervisord.conf /etc/supervisord.conf
 
-
-COPY supervisor/master.ini /etc/supervisor.d/
-COPY nginx/default.conf /etc/nginx/http.d/ 
-COPY nginx/default.conf.d /etc/nginx/conf.d/default.conf.d
-COPY php/opcache.ini $PHP_INI_DIR/conf.d/
-COPY php/php.ini $PHP_INI_DIR/conf.d/
-COPY php/www.conf php/zz-docker.conf /usr/local/etc/php-fpm.d/
-
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
