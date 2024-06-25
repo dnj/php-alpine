@@ -16,13 +16,13 @@ PHP running on alpine base Docker Image with or without Nginx 🐳
 ## Pull it from Github Registry
 To pull the docker image:
 ```bash
-docker pull ghcr.io/dnj/php-alpine:8.1-mysql-nginx
+docker pull ghcr.io/dnj/php-alpine:8.3-mysql-nginx
 ```
 
 ## Usage
 To run from current dir
 ```bash
-docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.1-mysql-nginx
+docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.3-mysql-nginx
 ```
 
 ## What's Included
@@ -58,13 +58,13 @@ docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.1-mysql-ngi
 ## Adding other PHP Extension
 You can add additional PHP Extensions by running `docker-ext-install` command. Don't forget to install necessary dependencies for required extension.
 ```bash
-FROM ghcr.io/dnj/php-alpine:8.1-mysql-nginx
+FROM ghcr.io/dnj/php-alpine:8.3-mysql-nginx
 RUN docker-php-ext-install xdebug
 ```
 
 ## Adding CRON
 ```bash
-FROM ghcr.io/dnj/php-alpine:8.1-mysql-nginx
+FROM ghcr.io/dnj/php-alpine:8.3-mysql-nginx
 echo '0 * * ? * * /usr/local/bin/php  /var/www/artisan schedule:run >> /dev/null 2>&1' > /etc/crontabs/root 
 ```
  
