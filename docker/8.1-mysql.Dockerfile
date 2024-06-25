@@ -31,6 +31,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         icu-dev \
         freetype \
         libmemcached \
+        exif \
+        dom \
         mysql-client \
         libssh2 \
         zip \
@@ -52,6 +54,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         sockets \
         intl \
         gd \
+        exif \
+        dom \
         xml \
         bz2 \
         pcntl \
@@ -64,6 +68,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     pecl install -a ssh2-1.3.1 && \
     docker-php-ext-enable \
         memcached \
+        exif \
+        dom \
         redis \
         ssh2 \
         inotify && \

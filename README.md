@@ -50,6 +50,8 @@ docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.1-mysql-ngi
 - inotify
 - redis
 - memcached
+- exif
+- dom
 - soap
 - ssh2
 
