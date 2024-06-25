@@ -10,7 +10,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         libpng-dev \
         libwebp-dev \
         libxpm-dev \
-        libavif-dev \
         libxml2-dev \
         bzip2-dev \
         libmemcached-dev \
@@ -23,7 +22,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         libpng \
         libwebp \
         libxpm \
-        libavif \
         jpegoptim \
         pngquant \
         optipng \
@@ -34,8 +32,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         nginx \
         postgresql-dev \
         libmemcached \
-        exif \
-        dom \
         libssh2 \
         zip \
         curl \
@@ -47,7 +43,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
     pecl install inotify && \
     pecl install redis-5.3.7 && \
     docker-php-ext-configure opcache --enable-opcache &&\
-    docker-php-ext-configure gd --with-jpeg --with-webp --with-xpm --with-avif --with-freetype && \
+    docker-php-ext-configure gd --with-jpeg --with-webp --with-xpm --with-freetype && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install \
         opcache \
@@ -65,14 +61,12 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         soap \
         gmp \
         exif \
-        dom \
         bcmath && \
     pecl install memcached-3.1.5 && \
     pecl install -a ssh2-1.3.1 && \
     docker-php-ext-enable \
         memcached \
         exif \
-        dom \
         redis \
         ssh2 \
         inotify && \
