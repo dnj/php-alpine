@@ -1,9 +1,9 @@
 FROM php:8.1-fpm-alpine3.16
 
 WORKDIR /var/www
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV PATH="/var/www/vendor/bin:$PATH"
-
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    PATH="/var/www/vendor/bin:$PATH"
+COPY --from=qpod/supervisord:alpine /opt/supervisord/supervisord /usr/bin/supervisord
 RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
         libjpeg-turbo-dev \
@@ -27,7 +27,6 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
         jpegoptim \
         pngquant \
         optipng \
-        supervisor \
         nano \
         icu-dev \
         freetype \
@@ -81,6 +80,12 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
     cp -v /mnt/usr/local/etc/php-fpm.d/* /usr/local/etc/php-fpm.d/ && \
     cp -v /mnt/etc/nginx/http.d/* /etc/nginx/http.d/ && \
     cp -Rv /mnt/etc/nginx/conf.d /etc/nginx/conf.d && \
-    cp -v /mnt/etc/supervisord.conf /etc/supervisord.conf
+    cp -v /mnt/etc/supervisord.conf /etc/supervisord.conf && \
+    cd /tmp && \
+    wget -O tasker.tar.gz https://github.com/adhocore/gronx/releases/download/v1.19.3/tasker_1.19.3_linux_amd64.tar.gz && \
+    tar -xvf tasker.tar.gz && \
+    mv tasker_*/tasker /usr/local/bin/tasker && \
+    rm -frv tasker* && \
+    echo "0 0 1 1 0 echo > /dev/null" > /etc/crontab
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

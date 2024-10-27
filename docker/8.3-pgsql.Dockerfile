@@ -1,8 +1,8 @@
 FROM php:8.3-cli-alpine3.20
 
 WORKDIR /var/www
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV PATH="/var/www/vendor/bin:$PATH"
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    PATH="/var/www/vendor/bin:$PATH"
 
 RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
@@ -74,6 +74,11 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
     apk del --no-network .build-deps && \
     mkdir -p /run/php && \
     cp -v /mnt/usr/local/etc/php/php.ini /usr/local/etc/php/php.ini && \
-    cp -v /mnt/usr/local/etc/php/conf.d/* /usr/local/etc/php/conf.d/
+    cp -v /mnt/usr/local/etc/php/conf.d/* /usr/local/etc/php/conf.d/ && \
+    cd /tmp && \
+    wget -O tasker.tar.gz https://github.com/adhocore/gronx/releases/download/v1.19.3/tasker_1.19.3_linux_amd64.tar.gz && \
+    tar -xvf tasker.tar.gz && \
+    mv tasker_*/tasker /usr/local/bin/tasker && \
+    rm -frv tasker*
 
 CMD ["/usr/bin/php"]

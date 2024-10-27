@@ -27,8 +27,8 @@ docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.3-mysql-ngi
 
 ## What's Included
  - [Composer](https://getcomposer.org/) ( v2 - updated )
- - CRON
- - [Supervisor](http://supervisord.org) 
+ - [Tasker](https://github.com/adhocore/gronx) instead of CRON
+ - [Go-Supervisor](https://github.com/QPod/supervisord) 
 
 ## Other Details
 - Alpine base image
@@ -62,14 +62,14 @@ FROM ghcr.io/dnj/php-alpine:8.3-mysql-nginx
 RUN docker-php-ext-install xdebug
 ```
 
-## Adding CRON
+## Adding a cronjob
 ```bash
 FROM ghcr.io/dnj/php-alpine:8.3-mysql-nginx
-echo '0 * * ? * * /usr/local/bin/php  /var/www/artisan schedule:run >> /dev/null 2>&1' > /etc/crontabs/root 
+echo '0 * * * * /usr/local/bin/php  /var/www/artisan schedule:run >> /dev/null 2>&1' >> /etc/crontab
 ```
  
 ## Adding custom Supervisor config
-You can add your own Supervisor config inside `/etc/supervisor.d/`. File extension needs to be `*.ini`. By default this image added `php-fpm` and `crond` process in supervisor. 
+You can add your own Supervisor config inside `/etc/supervisor.d/`. File extension needs to be `*.ini`. By default this image added `nginx`, `php-fpm` and `taker` process in supervisor. 
 
 E.g: For a nodejs program you can make file `my-websocket-app.ini`
 ```ini
@@ -85,7 +85,7 @@ On your Docker image
 FROM ghcr.io/dnj/php-alpine:latest
 ADD my-websocket-app.ini /etc/supervisor.d/
 ```
-For more details on config http://supervisord.org/configuration.html
+For more details please refrer to [QPod/supervisord](https://github.com/QPod/supervisord/blob/main/doc/doc-config.md) documentions.
 
 
 ## Bug Reporting
