@@ -18,7 +18,8 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
         libzip-dev \
         freetype-dev \
         gmp-dev \
-        curl-dev && \
+        curl-dev \
+        openssl-dev && \
     apk add --update --no-cache \
         libpng \
         libwebp \
@@ -39,7 +40,8 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
         libzip \
         gmp \
         linux-headers \
-        bzip2 && \
+        bzip2 \
+        openssl && \
     pecl install inotify && \
     pecl install redis-6.0.2 && \
     docker-php-ext-configure opcache --enable-opcache &&\
@@ -61,7 +63,8 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
         soap \
         gmp \
         exif \
-        bcmath && \
+        bcmath \
+        ftp && \
     pecl install memcached-3.2.0 && \
     pecl install -a ssh2-1.4.1 && \
     docker-php-ext-enable \
