@@ -1,4 +1,4 @@
-FROM php:8.2-cli-alpine3.16
+FROM php:8.2-cli-alpine3.20
 
 WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
