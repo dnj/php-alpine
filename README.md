@@ -28,7 +28,7 @@ docker run -v $(pwd):/var/www/html -p 80:80 ghcr.io/dnj/php-alpine:8.3-mysql-ngi
 ## What's Included
  - [Composer](https://getcomposer.org/) ( v2 - updated )
  - [Tasker](https://github.com/adhocore/gronx) instead of CRON
- - [Go-Supervisor](https://github.com/QPod/supervisord) 
+ - [Go-Supervisor](https://github.com/LabNow-ai/supervisord) 
 
 ## Other Details
 - Alpine base image
@@ -85,7 +85,7 @@ On your Docker image
 FROM ghcr.io/dnj/php-alpine:latest
 ADD my-websocket-app.ini /etc/supervisor.d/
 ```
-For more details please refrer to [QPod/supervisord](https://github.com/QPod/supervisord/blob/main/doc/doc-config.md) documentions.
+For more details please refrer to [LabNow-ai/supervisord](https://github.com/LabNow-ai/supervisord/blob/main/doc/doc-config.md) documentions.
 
 
 ## Bug Reporting

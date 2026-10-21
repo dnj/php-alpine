@@ -3,7 +3,6 @@ FROM php:8.2-fpm-alpine3.20
 WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     PATH="/var/www/vendor/bin:$PATH"
-COPY --from=qpod/supervisord:alpine /opt/supervisord/supervisord /usr/bin/supervisord
 RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-deps $PHPIZE_DEPS  \
         zlib-dev \
         libjpeg-turbo-dev \
@@ -85,6 +84,7 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
     cp -Rv /mnt/etc/nginx/conf.d /etc/nginx/conf.d && \
     cp -v /mnt/etc/supervisord.conf /etc/supervisord.conf && \
     cd /tmp && \
+    wget -qO- https://github.com/LabNow-ai/supervisord/releases/download/v1.2.2/supervisord_1.2.2_linux_amd64.tar.gz | tar -xz -C /usr/bin supervisord && \
     wget -O tasker.tar.gz https://github.com/adhocore/gronx/releases/download/v1.19.3/tasker_1.19.3_linux_amd64.tar.gz && \
     tar -xvf tasker.tar.gz && \
     mv tasker_*/tasker /usr/local/bin/tasker && \
