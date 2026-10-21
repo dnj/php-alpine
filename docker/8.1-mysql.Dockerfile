@@ -61,7 +61,7 @@ RUN --mount=type=bind,source=fs,target=/mnt apk add --no-cache --virtual .build-
         soap \
         gmp \
         bcmath && \
-    pecl install memcached-3.2.0 && \
+    wget -qO /tmp/memcached.tgz https://pecl.php.net/get/memcached-3.2.0.tgz && pecl install /tmp/memcached.tgz && rm /tmp/memcached.tgz && \
     pecl install -a ssh2-1.4.1 && \
     docker-php-ext-enable \
         memcached \
